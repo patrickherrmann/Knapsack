@@ -7,18 +7,23 @@ public class Main {
       Scanner scanner = new Scanner(System.in);
       int count = scanner.nextInt();
       
-      List<Item> items = new ArrayList<Item>(count);
+      List<Item> items = new LinkedList<Item>();
       for (int i = 0; i < count; i++) {
-         Item item = new Item(scanner.nextInt(), scanner.nextDouble(), scanner.nextDouble());
+         Item item = new Item();
+         item.label = scanner.nextInt();
+         item.value = scanner.nextDouble();
+         item.weight = scanner.nextDouble();
          items.add(item);
-      }
-      
-      for (Item item : items) {
-         System.out.println(item.weight);
       }
       
       int capacity = scanner.nextInt();
       
+      BruteForceSolver solver = new BruteForceSolver(items, capacity);
       
+      for (Item item : solver.solve()) {
+         System.out.print(item.label);
+      }
+      
+      System.out.println();
    }
 }
