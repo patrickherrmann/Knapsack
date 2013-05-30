@@ -7,19 +7,22 @@ public class BruteForceSolver extends KnapsackSolver {
    }
    
    @Override
-   public List<Item> solve() {
-      double bestValue = 0;
-      List<Item> best = new LinkedList<Item>();
+   public KnapsackSolution solve() {
+      KnapsackSolution best = new KnapsackSolution();
+      best.items = new LinkedList<Item>();
       for (List<Item> subset : subsets(items)) {
-         if (getWeight(subset) <= capacity) {
+         double weight = getWeight(subset);
+         if (weight <= capacity) {
             double value = getValue(subset);
-            if (value > bestValue) {
-               bestValue = value;
-               best = subset;
+            if (value > best.value) {
+               best.value = value;
+               best.weight = weight;
+               best.items = subset;
             }
          }
       }
       
+      best.approach = "Using Brute force the best feasible solution found";
       return best;
    }
    
@@ -40,10 +43,5 @@ public class BruteForceSolver extends KnapsackSolver {
          subsets.add(augmented);
       }
       return subsets;
-   }
-   
-   @Override
-   public String getName() {
-      return "Brute force solver";
    }
 }

@@ -10,9 +10,7 @@ public abstract class KnapsackSolver {
       this.capacity = capacity;
    }
    
-   public abstract List<Item> solve();
-   
-   public abstract String getName();
+   public abstract KnapsackSolution solve();
    
    public double getWeight(List<Item> items) {
       double weight = 0;

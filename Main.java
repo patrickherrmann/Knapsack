@@ -18,12 +18,8 @@ public class Main {
       
       int capacity = scanner.nextInt();
       
-      BruteForceSolver solver = new BruteForceSolver(items, capacity);
+      KnapsackSolver solver = new GreedySolver(items, capacity);
       
-      for (Item item : solver.solve()) {
-         System.out.print(item.label);
-      }
-      
-      System.out.println();
+      System.out.println(solver.solve());
    }
 }
