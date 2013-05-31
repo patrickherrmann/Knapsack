@@ -22,6 +22,7 @@ public class Main {
       
       solvers.add(new BruteForceSolver(items, capacity));
       solvers.add(new GreedySolver(items, capacity));
+      solvers.add(new DynamicProgrammingSolver(items, capacity));
       
       for (KnapsackSolver solver : solvers) {
          System.out.println(solver.solve());
