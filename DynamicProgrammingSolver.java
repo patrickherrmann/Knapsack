@@ -18,30 +18,39 @@ public class DynamicProgrammingSolver extends KnapsackSolver {
          for (int i = 0; i < items.size(); i++)
             table[j][i] = -1;
       
-      best.value = getCell(capacity - 1, items.size() - 1);
+      getCell(capacity - 1, items.size() - 1);
       
-      for (int j = 0; j < capacity; j++) {
-         for (int i = 0; i < items.size(); i++) {
-            System.out.print(table[j][i] + "  ");
-         }
-         System.out.println();
-      }
+      KnapsackSolution best = traceTable();
       
-      best.items = new ArrayList<Item>();
       best.approach = "Dynamic Programming solution";
       return best;
    }
    
+   // Traces back table
    private KnapsackSolution traceTable() {
    
       KnapsackSolution best = new KnapsackSolution();
+      best.items = new ArrayList<Item>();
    
       int i = items.size() - 1, j = capacity - 1;
       
-      while (i >= 0 || j > 0) {
+      while (i >= 0) {
+         Item item = items.get(i);
+         int jWith = j - (int) item.weight;
+         double without = i == 0 ? 0 : table[j][i - 1];
+         double with = item.value + (i == 0 ? 0 : table[jWith][i - 1]);
          
+         if (with == table[j][i]) {
+            best.items.add(item);
+            best.value += item.value;
+            best.weight += item.weight;
+            j = jWith;
+         }
+         
+         i--;
       }
       
+      return best;
    }
    
    // Uses recursion with memoization
