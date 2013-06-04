@@ -36,15 +36,14 @@ public class DynamicProgrammingSolver extends KnapsackSolver {
       
       while (i >= 0) {
          Item item = items.get(i);
-         int jWith = j - (int) item.weight;
-         double without = i == 0 ? 0 : table[j][i - 1];
-         double with = item.value + (i == 0 ? 0 : table[jWith][i - 1]);
          
-         if (with == table[j][i]) {
+         double without = i == 0 ? 0 : table[j][i - 1];
+         
+         if (table[j][i] != without) {
             best.items.add(item);
             best.value += item.value;
             best.weight += item.weight;
-            j = jWith;
+            j -= (int) item.weight;
          }
          
          i--;
