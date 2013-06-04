@@ -20,9 +20,11 @@ public class Main {
       
       List<KnapsackSolver> solvers = new ArrayList<KnapsackSolver>();
       
-      solvers.add(new BruteForceSolver(items, capacity));
+      if (items.size() <= 20) 
+         solvers.add(new BruteForceSolver(items, capacity));
       solvers.add(new GreedySolver(items, capacity));
       solvers.add(new DynamicProgrammingSolver(items, capacity));
+      solvers.add(new BranchAndBoundSolver(items, capacity));
       
       for (KnapsackSolver solver : solvers) {
          System.out.println(solver.solve());

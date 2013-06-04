@@ -17,11 +17,7 @@ public class KnapsackSolution {
       builder.append(weight);
       builder.append("\n");
       
-      Collections.sort(items, new Comparator<Item>() {
-         public int compare(Item i1, Item i2) {
-            return i1.label - i2.label;
-         }
-      });
+      Collections.sort(items, Item.byLabel());
       
       for (Item item : items) {
          builder.append(item.label);

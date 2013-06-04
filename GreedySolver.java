@@ -13,13 +13,7 @@ public class GreedySolver extends KnapsackSolver {
       
       greedy.items = new ArrayList<Item>(items);
       
-      Comparator<Item> greedyFunction = new Comparator<Item>() {
-         public int compare(Item i1, Item i2) {
-            return Double.compare(i2.getRatio(), i1.getRatio());
-         }
-      };
-      
-      Collections.sort(greedy.items, greedyFunction);
+      Collections.sort(greedy.items, Item.byRatio());
       
       double capUsed = 0;
       double value = 0;
