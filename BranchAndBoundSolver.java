@@ -29,17 +29,8 @@ public class BranchAndBoundSolver extends KnapsackSolver {
       
       // Performs the greedy algorithm with the rest of the items
       public void computeBound() {
-         //Item best = items.get(h);
-         //bound = value + ((capacity - weight) / best.weight) * best.value;
-         double w = weight;
-         bound = value;
-         int i = h;
-         while (i >= 0) {
-            Item item = items.get(i);
-            if (w + item.weight > capacity) break;
-            w += item.weight;
-            bound += item.value;
-         }
+         Item item = items.get(h);
+         bound = (capacity - weight) * (item.value / item.weight) + value;
       }
    }
    
@@ -76,7 +67,6 @@ public class BranchAndBoundSolver extends KnapsackSolver {
                
                if (with.value > best.value) {
                   best = with;
-                  //System.out.println(best.value + " " + node.bound);
                }
                if (with.bound > best.value) {
                   q.offer(with);
@@ -96,7 +86,7 @@ public class BranchAndBoundSolver extends KnapsackSolver {
       solution.value = best.value;
       solution.weight = best.weight;
       solution.items = best.taken;
-      solution.approach = "Branch and bound";
+      solution.approach = "Using Branch and Bound the best feasible solution found";
       
       return solution;
    }

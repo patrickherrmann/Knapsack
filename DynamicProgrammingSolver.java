@@ -12,13 +12,13 @@ public class DynamicProgrammingSolver extends KnapsackSolver {
    public KnapsackSolution solve() {
       
       
-      table = new double[capacity][items.size()];
+      table = new double[capacity + 1][items.size()];
       
-      for (int j = 0; j < capacity; j++)
+      for (int j = 0; j < capacity + 1; j++)
          for (int i = 0; i < items.size(); i++)
             table[j][i] = -1;
       
-      getCell(capacity - 1, items.size() - 1);
+      getCell(capacity, items.size() - 1);
       
       KnapsackSolution best = traceTable();
       
@@ -32,7 +32,7 @@ public class DynamicProgrammingSolver extends KnapsackSolver {
       KnapsackSolution best = new KnapsackSolution();
       best.items = new ArrayList<Item>();
    
-      int i = items.size() - 1, j = capacity - 1;
+      int i = items.size() - 1, j = capacity;
       
       while (i >= 0) {
          Item item = items.get(i);
@@ -55,16 +55,21 @@ public class DynamicProgrammingSolver extends KnapsackSolver {
    // Uses recursion with memoization
    private double getCell(int j, int i) {
    
-      if (i < 0) return 0;
+      if (i < 0 || j < 0) return 0;
       Item item = items.get(i);
       
-      if (item.weight > j) return 0;
       double cell = table[j][i];
       
       if (cell == -1) {
+
          double with = item.value + getCell(j - (int) item.weight, i - 1);
          double without = getCell(j, i - 1);
-         cell = Math.max(with, without);
+         
+         if (item.weight > j)
+            cell = without;
+         else
+            cell = Math.max(with, without);
+            
          table[j][i] = cell;
       }
       
