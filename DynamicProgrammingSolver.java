@@ -58,19 +58,18 @@ public class DynamicProgrammingSolver extends KnapsackSolver {
       if (i < 0 || j < 0) return 0;
       Item item = items.get(i);
       
-      double cell = table[j][i];
+      double with, without, cell = table[j][i];
       
+      // If not memoized
       if (cell == -1) {
-
-         double with = item.value + getCell(j - (int) item.weight, i - 1);
-         double without = getCell(j, i - 1);
+      
+         if (item.weight > j) with = -1;
+         else with = item.value + getCell(j - (int) item.weight, i - 1);
+         without = getCell(j, i - 1);
          
-         if (item.weight > j)
-            cell = without;
-         else
-            cell = Math.max(with, without);
+         cell = Math.max(with, without);
             
-         table[j][i] = cell;
+         table[j][i] = cell; // Memoize
       }
       
       return cell;

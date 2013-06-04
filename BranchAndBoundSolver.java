@@ -24,13 +24,22 @@ public class BranchAndBoundSolver extends KnapsackSolver {
       
       // Sort by bound
       public int compareTo(Node other) {
-         return (int) (bound - other.bound);
+         return (int) (other.bound - bound);
       }
       
-      // Performs the greedy algorithm with the rest of the items
       public void computeBound() {
-         Item item = items.get(h);
-         bound = (capacity - weight) * (item.value / item.weight) + value;
+         int i = h;
+         double w = weight;
+         bound = value;
+         Item item;
+         do {
+            item = items.get(i);
+            if (w + item.weight > capacity) break;
+            w += item.weight;
+            bound += item.value;
+            i++;
+         } while (i < items.size());
+         bound += (capacity - w) * (item.value / item.weight);
       }
    }
    
